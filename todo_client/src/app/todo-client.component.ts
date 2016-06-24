@@ -11,7 +11,7 @@ import {HTTP_PROVIDERS} from '@angular/http';
 })
 export class TodoClientAppComponent implements OnInit {
   public todos: Todo[];
-  public new_todo: string;
+  todo =  new Todo();
   constructor(private http_service: HttpService){
 
   }
@@ -26,8 +26,8 @@ export class TodoClientAppComponent implements OnInit {
 
 
   addTodo(){
-    console.log("todo");
-    console.log(this.new_todo);
+    this.http_service.add_todo(this.todo).then(todo=>this.get_todos());
   }
+
 
 }

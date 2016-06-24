@@ -9,11 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var todo_model_1 = require('./models/todo.model');
 var http_service_1 = require('./services/http.service');
 var http_1 = require('@angular/http');
 var TodoClientAppComponent = (function () {
     function TodoClientAppComponent(http_service) {
         this.http_service = http_service;
+        this.todo = new todo_model_1.Todo();
     }
     TodoClientAppComponent.prototype.ngOnInit = function () {
         this.get_todos();
@@ -23,8 +25,8 @@ var TodoClientAppComponent = (function () {
         this.http_service.get_todos().then(function (todos) { return _this.todos = todos; });
     };
     TodoClientAppComponent.prototype.addTodo = function () {
-        console.log("todo");
-        console.log(this.new_todo);
+        var _this = this;
+        this.http_service.add_todo(this.todo).then(function (todo) { return _this.get_todos(); });
     };
     TodoClientAppComponent = __decorate([
         core_1.Component({

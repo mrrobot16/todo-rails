@@ -1,8 +1,8 @@
-export class Todo{
+export class Todo {
+  id: number;
   description: string;
   completed: boolean;
   archived: boolean;
-  id: number;
   created_at: string;
   updated_at: string;
 }

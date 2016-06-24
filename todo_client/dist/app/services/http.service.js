@@ -22,6 +22,22 @@ var HttpService = (function () {
             .toPromise()
             .then(function (res) { return res.json(); });
     };
+    HttpService.prototype.add_todo = function (todo) {
+        console.log("add_todo service 1");
+        return this.post(todo);
+    };
+    HttpService.prototype.post = function (todo) {
+        console.log('post in service 2 todo argument: ', todo);
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        return this.http
+            .post(this.todo_end, JSON.stringify(todo), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json(); });
+        // {"todo"=> {"description"=> "jello"}}
+        // {"_json"=>"hello", "todo"=>{}}
+    };
     HttpService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

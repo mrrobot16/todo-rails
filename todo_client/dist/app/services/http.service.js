@@ -15,7 +15,7 @@ var HttpService = (function () {
         this.http = http;
         console.log("Http Service on the move");
         this.all_todos = [];
-        this.todo_end = "http://localhost:3000/todos";
+        this.todo_end = "todos";
     }
     HttpService.prototype.get_todos = function () {
         return this.http.get(this.todo_end)

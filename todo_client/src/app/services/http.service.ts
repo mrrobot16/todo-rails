@@ -11,7 +11,7 @@ export class HttpService{
   constructor(private http: Http){
     console.log("Http Service on the move");
     this.all_todos = [];
-    this.todo_end = "http://localhost:3000/todos";
+    this.todo_end = "todos";
   }
 
   get_todos():Promise<any>{

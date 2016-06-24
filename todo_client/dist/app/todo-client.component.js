@@ -14,11 +14,17 @@ var http_1 = require('@angular/http');
 var TodoClientAppComponent = (function () {
     function TodoClientAppComponent(http_service) {
         this.http_service = http_service;
-        console.log("TodoClientAppComponent on the move");
     }
-    TodoClientAppComponent.prototype.call_api = function () {
-        console.log("Calling rails api");
-        this.http_service.get_todos();
+    TodoClientAppComponent.prototype.ngOnInit = function () {
+        this.get_todos();
+    };
+    TodoClientAppComponent.prototype.get_todos = function () {
+        var _this = this;
+        this.http_service.get_todos().then(function (todos) { return _this.todos = todos; });
+    };
+    TodoClientAppComponent.prototype.addTodo = function () {
+        console.log("todo");
+        console.log(this.new_todo);
     };
     TodoClientAppComponent = __decorate([
         core_1.Component({

@@ -1,7 +1,32 @@
-<div class="body">
-  <h1>
-  Angular 2 TODO Client
-  </h1>
+<section class="todoapp">
+	<header class="header">
+		<h1>todos</h1>
+		<!-- <input class="new-todo" placeholder="What needs to be done?" autofocus="" [(ngModel)]="newTodoText" (keyup.enter)="addTodo()"> -->
+    <input class="new-todo" placeholder="What needs to be done?" (keyup.enter)="addTodo()" [(ngModel)]="new_todo">
+	</header>
+	<!-- <section class="main" *ngIf="todoStore.todos.length > 0"> -->
+  <section class="main">
+		<!-- <input class="toggle-all" type="checkbox" *ngIf="todoStore.todos.length" #toggleall [checked]="todoStore.allCompleted()" (click)="todoStore.setAllTo(toggleall.checked)"> -->
+    <button class="btn" (click)="call_api()">Get Todos</button>
+    <ul class="todo-list">
+      <li *ngFor="let todo of todos">{{todo.description}}
+        Completed?<input type="checkbox">
+        Archived<input type="checkbox">
+      </li>
 
-  <button class="btn" (click)="call_api()">tap me</button>
-</div>
+
+			<!-- <li *ngFor="#todo of todoStore.todos" [class.completed]="todo.completed" [class.editing]="todo.editing">
+				<div class="view">
+					<input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.completed">
+					<label (dblclick)="editTodo(todo)">{{todo.title}}</label>
+					<button class="destroy" (click)="remove(todo)"></button>
+				</div>
+				<input class="edit" *ngIf="todo.editing" [value]="todo.title" #editedtodo (blur)="stopEditing(todo, editedtodo.value)" (keyup.enter)="updateEditingTodo(todo, editedtodo.value)" (keyup.escape)="cancelEditingTodo(todo)">
+			</li> -->
+		</ul>
+	</section>
+	<!-- <footer class="footer" *ngIf="todoStore.todos.length > 0">
+		<span class="todo-count"><strong>{{todoStore.getRemaining().length}}</strong> {{todoStore.getRemaining().length == 1 ? 'item' : 'items'}} left</span>
+		<button class="clear-completed" *ngIf="todoStore.getCompleted().length > 0" (click)="removeCompleted()">Clear completed</button>
+	</footer> -->
+</section>

@@ -1,0 +1,1 @@
+{"version":3,"file":"todo.model.js","sourceRoot":"","sources":["todo.model.ts"],"names":[],"mappings":";AAAA;IAAA;IAOA,CAAC;IAAD,WAAC;AAAD,CAAC,AAPD,IAOC;AAPY,YAAI,OAOhB,CAAA","sourcesContent":["export class Todo{\n  description: string;\n  completed: boolean;\n  archived: boolean;\n  id: number;\n  created_at: string;\n  updated_at: string;\n}\n"]}

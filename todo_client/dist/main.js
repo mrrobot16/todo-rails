@@ -1,5 +1,6 @@
 "use strict";
 var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
+require('rxjs/Rx');
 var core_1 = require('@angular/core');
 var _1 = require('./app/');
 if (_1.environment.production) {

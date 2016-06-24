@@ -10,26 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-require('rxjs/Rx');
 var HttpService = (function () {
     function HttpService(http) {
         this.http = http;
         console.log("Http Service on the move");
+        this.all_todos = [];
         this.todo_end = "http://localhost:3000/todos";
     }
-    // NOTE f(x) for gettings todos from rails api
     HttpService.prototype.get_todos = function () {
-        var _this = this;
-        console.log("getting todos:");
-        this.todos = this.http.get(this.todo_end);
-        this.todos.subscribe(function (todos) { return _this.todos_data(todos); });
-        return;
-    };
-    HttpService.prototype.todos_data = function (res) {
-        console.log("todos_data()");
-        var todos = res.json();
-        console.log(todos);
-        return todos;
+        return this.http.get(this.todo_end)
+            .toPromise()
+            .then(function (res) { return res.json(); });
     };
     HttpService = __decorate([
         core_1.Injectable(), 

@@ -1,0 +1,4 @@
+{
+"scripts": {
+  "postinstall": "cd todo_client && npm install"
+}

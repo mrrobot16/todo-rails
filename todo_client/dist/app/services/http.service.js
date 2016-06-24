@@ -26,6 +26,9 @@ var HttpService = (function () {
         console.log("add_todo service 1");
         return this.post(todo);
     };
+    HttpService.prototype.put = function () {
+        // Update existing TODO
+    };
     HttpService.prototype.post = function (todo) {
         console.log('post in service 2 todo argument: ', todo);
         var headers = new http_1.Headers({

@@ -26,6 +26,11 @@ export class HttpService{
     return this.post(todo);
   }
 
+  private put(){
+  // Update existing TODO
+
+  }
+
   private post(todo: Todo): Promise<Todo> {
     console.log('post in service 2 todo argument: ', todo);
     let headers = new Headers({
@@ -38,6 +43,8 @@ export class HttpService{
       // {"todo"=> {"description"=> "jello"}}
       // {"_json"=>"hello", "todo"=>{}}
   }
+
+
 
 
 }

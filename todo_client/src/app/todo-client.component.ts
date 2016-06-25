@@ -50,7 +50,7 @@ export class TodoClientAppComponent implements OnInit {
 
   archive_todo(todo: Todo):Promise<any>{
     console.log("Archive TODO PUT", todo);
-    todo.archived != todo.archived;
+    todo.archived = !todo.archived;
     console.log("Archive TODO PUT2", todo)
     return this.http_service.update_todo(todo)
     .then(

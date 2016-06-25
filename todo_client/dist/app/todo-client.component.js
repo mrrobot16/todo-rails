@@ -16,10 +16,12 @@ var TodoClientAppComponent = (function () {
     function TodoClientAppComponent(http_service) {
         this.http_service = http_service;
         this.todo = new todo_model_1.Todo();
+        console.log(this.todo);
     }
     TodoClientAppComponent.prototype.ngOnInit = function () {
         this.get_todos();
     };
+    // Note get my todos ---> TO CONTINUE YOU SAID CYBERSTRIKE WITNESS
     TodoClientAppComponent.prototype.get_todos = function () {
         var _this = this;
         this.http_service.get_todos().then(function (todos) { return _this.todos = todos; });

@@ -32,12 +32,18 @@ export class HttpService{
   }
 
   private post(todo: Todo): Promise<Todo> {
-    console.log('post in service 2 todo argument: ', todo);
+    console.log('post in service 2 todo argument: ', typeof todo);
+    console.log("REBUILD");
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
+    var posting = {
+      todo: {
+        description: todo
+      }
+    }
     return this.http
-      .post(this.todo_end, JSON.stringify(todo), { headers: headers })
+      .post(this.todo_end, JSON.stringify(posting), { headers: headers })
       .toPromise()
       .then(res => res.json());
       // {"todo"=> {"description"=> "jello"}}

@@ -13,13 +13,13 @@ export class TodoClientAppComponent implements OnInit {
   public todos: Todo[];
   todo =  new Todo();
   constructor(private http_service: HttpService){
-
+    console.log(this.todo);
   }
 
   ngOnInit(){
     this.get_todos();
   }
-
+  // Note get my todos ---> TO CONTINUE YOU SAID CYBERSTRIKE WITNESS
   get_todos(){
     this.http_service.get_todos().then((todos)=> this.todos = todos);
   }

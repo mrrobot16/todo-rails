@@ -30,12 +30,18 @@ var HttpService = (function () {
         // Update existing TODO
     };
     HttpService.prototype.post = function (todo) {
-        console.log('post in service 2 todo argument: ', todo);
+        console.log('post in service 2 todo argument: ', typeof todo);
+        console.log("REBUILD");
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
         });
+        var posting = {
+            todo: {
+                description: todo
+            }
+        };
         return this.http
-            .post(this.todo_end, JSON.stringify(todo), { headers: headers })
+            .post(this.todo_end, JSON.stringify(posting), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json(); });
         // {"todo"=> {"description"=> "jello"}}

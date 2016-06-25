@@ -12,7 +12,6 @@ export class HttpService{
     console.log("Http Service on the move");
     this.all_todos = [];
     this.todo_end = "todos";
-
   }
 
   get_todos():Promise<any>{
@@ -35,19 +34,34 @@ export class HttpService{
     return this.put(todo);
   }
 
-  private put(todo):Promise<Todo>{
+  delete(todo){
+    return this.destroy(todo);
+  }
+
+  private destroy(todo: Todo):Promise<void>{
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    return this.http
+    .delete(this.todo_end+'/'+todo.id, { headers: headers })
+    .toPromise().then((res)=>{
+      console.log('res from delete: ', res);
+    });
+  }
+
+  private put(todo: Todo):Promise<Todo>{
+
   // Update existing TODO
   let headers = new Headers({
     'Content-Type': 'application/json'
   });
-
   // object sent to rails
   var updated_todo = {
-    todo: {
-      id:todo.id,
-      description: todo.description
-    }
+    todo: todo
   }
+
+  console.log({put: todo, updated_todo: updated_todo, json: JSON.stringify(updated_todo)})
+
   return this.http
     .put(this.todo_end+'/'+todo.id, JSON.stringify(updated_todo), { headers: headers })
     .toPromise()

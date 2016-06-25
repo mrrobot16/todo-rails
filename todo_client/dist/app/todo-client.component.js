@@ -15,8 +15,6 @@ var http_1 = require('@angular/http');
 var TodoClientAppComponent = (function () {
     function TodoClientAppComponent(http_service) {
         this.http_service = http_service;
-        this.completed = false;
-        this.archived = false;
         this.todo = null; // fix in [Object Object] in the html
         console.log("plain todo: ", this.todo);
     }
@@ -26,33 +24,13 @@ var TodoClientAppComponent = (function () {
     // Note get my todos ---> TO CONTINUE YOU SAID CYBERSTRIKE WITNESS
     TodoClientAppComponent.prototype.get_todos = function () {
         var _this = this;
-        return this.http_service.get_todos().then(function (todos) {
-            _this.todos = todos;
-        });
+        return this.http_service.get_todos().then(function (todos) { return _this.todos = todos; });
     };
     TodoClientAppComponent.prototype.update_todo = function (todo) {
         var _this = this;
-        console.log("getTodo By ID::::: ", todo);
+        console.dir({ todo: todo });
         return this.http_service.update_todo(todo)
             .then(function () { return _this.get_todos(); });
-    };
-    TodoClientAppComponent.prototype.complete = function (todo) {
-        console.log("complete todo: ", todo);
-        if (this.completed) {
-            this.completed = false;
-        }
-        else {
-            this.completed = true;
-        }
-    };
-    TodoClientAppComponent.prototype.archive = function (todo) {
-        console.log("archived todo: ", todo);
-        if (this.archived) {
-            this.archived = false;
-        }
-        else {
-            this.archived = true;
-        }
     };
     TodoClientAppComponent.prototype.addTodo = function (todo) {
         var _this = this;
@@ -63,6 +41,10 @@ var TodoClientAppComponent = (function () {
         new_todo.archived = false;
         new_todo.completed = false;
         this.http_service.add_todo(new_todo).then(function (todo) { return _this.get_todos(); });
+    };
+    TodoClientAppComponent.prototype.delete_todo = function (todo) {
+        var _this = this;
+        return this.http_service.delete(todo).then(function () { return _this.get_todos(); });
     };
     TodoClientAppComponent = __decorate([
         core_1.Component({

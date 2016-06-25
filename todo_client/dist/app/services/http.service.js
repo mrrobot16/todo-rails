@@ -33,6 +33,19 @@ var HttpService = (function () {
     HttpService.prototype.update_todo = function (todo) {
         return this.put(todo);
     };
+    HttpService.prototype.delete = function (todo) {
+        return this.destroy(todo);
+    };
+    HttpService.prototype.destroy = function (todo) {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        return this.http
+            .delete(this.todo_end + '/' + todo.id, { headers: headers })
+            .toPromise().then(function (res) {
+            console.log('res from delete: ', res);
+        });
+    };
     HttpService.prototype.put = function (todo) {
         // Update existing TODO
         var headers = new http_1.Headers({
@@ -40,11 +53,9 @@ var HttpService = (function () {
         });
         // object sent to rails
         var updated_todo = {
-            todo: {
-                id: todo.id,
-                description: todo.description
-            }
+            todo: todo
         };
+        console.log({ put: todo, updated_todo: updated_todo, json: JSON.stringify(updated_todo) });
         return this.http
             .put(this.todo_end + '/' + todo.id, JSON.stringify(updated_todo), { headers: headers })
             .toPromise()

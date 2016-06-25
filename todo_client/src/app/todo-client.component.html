@@ -11,8 +11,13 @@
     <ul class="todo-list">
 		<li *ngFor="let todo of todos">
 			<input [ngModel]="todo.description" (ngModelChange)="todo.description = $event" (keyup.enter)="update_todo(todo)">
-			Done?<input type="checkbox" [ngModel]="completed" (ngModelChange)="complete(todo)">
-			Save<input type="checkbox" [ngModel]="archived" (ngModelChange)="archive(todo)">
+			<label for='completed'>
+				Complete
+				<input type="checkbox" [(ngModel)]="todo.completed" (ngModelChange)="todo.completed = $event" (change)="update_todo(todo)">
+			</label>
+
+		<!-- <button class="btn" (click)="update_todo(todo)">Archive</button> -->
+		<button class="btn" (click)="delete_todo(todo)">Delete</button>
 		</li>
 		</ul>
 	</section>

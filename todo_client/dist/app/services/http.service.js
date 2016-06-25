@@ -23,29 +23,44 @@ var HttpService = (function () {
             .then(function (res) { return res.json(); });
     };
     HttpService.prototype.add_todo = function (todo) {
-        console.log("add_todo service 1");
+        console.log("add_todo service 1: ", todo);
         return this.post(todo);
     };
-    HttpService.prototype.put = function () {
-        // Update existing TODO
+    HttpService.prototype.get_todo = function (todo_id) {
+        console.log("get_todo from clicking <li>");
+        // return todo_id;
     };
-    HttpService.prototype.post = function (todo) {
-        console.log('post in service 2 todo argument: ', typeof todo);
-        console.log("REBUILD");
+    HttpService.prototype.update_todo = function (todo) {
+        return this.put(todo);
+    };
+    HttpService.prototype.put = function (todo) {
+        // Update existing TODO
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
         });
-        var posting = {
+        // object sent to rails
+        var updated_todo = {
             todo: {
-                description: todo
+                id: todo.id,
+                description: todo.description
             }
         };
         return this.http
-            .post(this.todo_end, JSON.stringify(posting), { headers: headers })
+            .put(this.todo_end + '/' + todo.id, JSON.stringify(updated_todo), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json(); });
-        // {"todo"=> {"description"=> "jello"}}
-        // {"_json"=>"hello", "todo"=>{}}
+    };
+    HttpService.prototype.post = function (todo) {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        var todoParams = {
+            todo: todo
+        };
+        return this.http
+            .post(this.todo_end, JSON.stringify(todoParams), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json(); });
     };
     HttpService = __decorate([
         core_1.Injectable(), 

@@ -22,33 +22,51 @@ export class HttpService{
   }
 
   add_todo(todo: Todo):Promise<Todo>{
-    console.log("add_todo service 1");
+    console.log("add_todo service 1: ", todo);
     return this.post(todo);
   }
 
-  private put(){
-  // Update existing TODO
+  get_todo(todo_id): void{
+    console.log("get_todo from clicking <li>");
+    // return todo_id;
+  }
 
+  update_todo(todo){
+    return this.put(todo);
+  }
+
+  private put(todo):Promise<Todo>{
+  // Update existing TODO
+  let headers = new Headers({
+    'Content-Type': 'application/json'
+  });
+
+  // object sent to rails
+  var updated_todo = {
+    todo: {
+      id:todo.id,
+      description: todo.description
+    }
+  }
+  return this.http
+    .put(this.todo_end+'/'+todo.id, JSON.stringify(updated_todo), { headers: headers })
+    .toPromise()
+    .then(res => res.json());
   }
 
   private post(todo: Todo): Promise<Todo> {
-    console.log('post in service 2 todo argument: ', typeof todo);
-    console.log("REBUILD");
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
-    var posting = {
-      todo: {
-        description: todo
-      }
+    let todoParams = {
+      todo: todo
     }
     return this.http
-      .post(this.todo_end, JSON.stringify(posting), { headers: headers })
+      .post(this.todo_end, JSON.stringify(todoParams), { headers: headers })
       .toPromise()
       .then(res => res.json());
-      // {"todo"=> {"description"=> "jello"}}
-      // {"_json"=>"hello", "todo"=>{}}
   }
+
 
 
 

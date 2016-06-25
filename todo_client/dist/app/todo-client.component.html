@@ -1,31 +1,19 @@
 <section class="todoapp">
 	<header class="header">
-		<h1>todos</h1>
-    <input class="new-todo" placeholder="What needs to be done?" (keyup.enter)="addTodo()" [(ngModel)]="todo">
+		<h1>Todos</h1>
+		<!-- NOTE todo_description Local variable so we can have a placeholder in the main input -->
+
 	</header>
-	<!-- <section class="main" *ngIf="todoStore.todos.length > 0"> -->
+
   <section class="main">
-		<!-- <input class="toggle-all" type="checkbox" *ngIf="todoStore.todos.length" #toggleall [checked]="todoStore.allCompleted()" (click)="todoStore.setAllTo(toggleall.checked)"> -->
-    <button class="btn" (click)="call_api()">Get Todos</button>
+		<input class="new-todo" placeholder="What needs to be done?" (keyup.enter)="addTodo(todo_description.value)" #todo_description>
+    <button class="btn" (click)="get_todos()">Get Todos</button>
     <ul class="todo-list">
-      <li *ngFor="let todo of todos">{{todo.description}}
-        Completed?<input type="checkbox">
-        Archived<input type="checkbox">
-      </li>
-
-
-			<!-- <li *ngFor="#todo of todoStore.todos" [class.completed]="todo.completed" [class.editing]="todo.editing">
-				<div class="view">
-					<input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.completed">
-					<label (dblclick)="editTodo(todo)">{{todo.title}}</label>
-					<button class="destroy" (click)="remove(todo)"></button>
-				</div>
-				<input class="edit" *ngIf="todo.editing" [value]="todo.title" #editedtodo (blur)="stopEditing(todo, editedtodo.value)" (keyup.enter)="updateEditingTodo(todo, editedtodo.value)" (keyup.escape)="cancelEditingTodo(todo)">
-			</li> -->
+		<li *ngFor="let todo of todos">
+			<input [ngModel]="todo.description" (ngModelChange)="todo.description = $event" (keyup.enter)="update_todo(todo)">
+			Done?<input type="checkbox" [ngModel]="completed" (ngModelChange)="complete(todo)">
+			Save<input type="checkbox" [ngModel]="archived" (ngModelChange)="archive(todo)">
+		</li>
 		</ul>
 	</section>
-	<!-- <footer class="footer" *ngIf="todoStore.todos.length > 0">
-		<span class="todo-count"><strong>{{todoStore.getRemaining().length}}</strong> {{todoStore.getRemaining().length == 1 ? 'item' : 'items'}} left</span>
-		<button class="clear-completed" *ngIf="todoStore.getCompleted().length > 0" (click)="removeCompleted()">Clear completed</button>
-	</footer> -->
 </section>

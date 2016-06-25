@@ -15,8 +15,10 @@ var http_1 = require('@angular/http');
 var TodoClientAppComponent = (function () {
     function TodoClientAppComponent(http_service) {
         this.http_service = http_service;
-        this.todo = new todo_model_1.Todo();
-        console.log(this.todo);
+        this.completed = false;
+        this.archived = false;
+        this.todo = null; // fix in [Object Object] in the html
+        console.log("plain todo: ", this.todo);
     }
     TodoClientAppComponent.prototype.ngOnInit = function () {
         this.get_todos();
@@ -24,11 +26,43 @@ var TodoClientAppComponent = (function () {
     // Note get my todos ---> TO CONTINUE YOU SAID CYBERSTRIKE WITNESS
     TodoClientAppComponent.prototype.get_todos = function () {
         var _this = this;
-        this.http_service.get_todos().then(function (todos) { return _this.todos = todos; });
+        return this.http_service.get_todos().then(function (todos) {
+            _this.todos = todos;
+        });
     };
-    TodoClientAppComponent.prototype.addTodo = function () {
+    TodoClientAppComponent.prototype.update_todo = function (todo) {
         var _this = this;
-        this.http_service.add_todo(this.todo).then(function (todo) { return _this.get_todos(); });
+        console.log("getTodo By ID::::: ", todo);
+        return this.http_service.update_todo(todo)
+            .then(function () { return _this.get_todos(); });
+    };
+    TodoClientAppComponent.prototype.complete = function (todo) {
+        console.log("complete todo: ", todo);
+        if (this.completed) {
+            this.completed = false;
+        }
+        else {
+            this.completed = true;
+        }
+    };
+    TodoClientAppComponent.prototype.archive = function (todo) {
+        console.log("archived todo: ", todo);
+        if (this.archived) {
+            this.archived = false;
+        }
+        else {
+            this.archived = true;
+        }
+    };
+    TodoClientAppComponent.prototype.addTodo = function (todo) {
+        var _this = this;
+        console.log("todo typeof: ", typeof todo);
+        // console.log(todo);
+        var new_todo = new todo_model_1.Todo();
+        new_todo.description = todo;
+        new_todo.archived = false;
+        new_todo.completed = false;
+        this.http_service.add_todo(new_todo).then(function (todo) { return _this.get_todos(); });
     };
     TodoClientAppComponent = __decorate([
         core_1.Component({

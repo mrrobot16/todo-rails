@@ -7,7 +7,7 @@
 				<!-- NOTE #todo_description Local variable in our new-todo inbox box so we can see a placeholder and not "[Object Object]" -->
 		<input class="new-todo" placeholder="What needs to be done?" [ngModel]="todo" (keyup.enter)="addTodo(todo_description.value)" #todo_description>
 		<!-- Show all Archived -->
-		<a class="delete" (click)="show_archived()">{{toggle_display}} Saved Todo's</a>	 
+		<a class="delete" href="#" (click)="show_archived()">Tap to {{toggle_display}} Saved Todo's</a>	 
 		<ul class="todo-list">
 		<li *ngFor="let todo of todos" >
 			<input class="todos" [ngModel]="todo.description" (ngModelChange)="todo.description = $event" (keyup.enter)="update_todo(todo)">

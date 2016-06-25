@@ -39,9 +39,23 @@ input[type="checkbox"] {
 	outline: none;
 }
 
-.btn {
-  color:red;
+.btton {
+  color:#e6e6e6;
+	background-color: #002bff;
 }
+
+.com_box {
+	position: initial;
+  /*left: -9999px;*/
+  opacity: 50;
+}
+
+.arc_box {
+	position: initial;
+  /*left: -9999px;*/
+  opacity: 50;
+}
+
 
 .hidden {
 	display: none;

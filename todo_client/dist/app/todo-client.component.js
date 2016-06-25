@@ -28,7 +28,23 @@ var TodoClientAppComponent = (function () {
     };
     TodoClientAppComponent.prototype.update_todo = function (todo) {
         var _this = this;
-        console.dir({ todo: todo });
+        console.log("TODO PUT", todo);
+        return this.http_service.update_todo(todo)
+            .then(function () { return _this.get_todos(); });
+    };
+    TodoClientAppComponent.prototype.complete_todo = function (todo) {
+        var _this = this;
+        console.log("COMPLETE TODO PUT", todo);
+        todo.completed = !todo.completed;
+        console.log("COMPLETE TODO PUT2", todo);
+        return this.http_service.update_todo(todo)
+            .then(function () { return _this.get_todos(); });
+    };
+    TodoClientAppComponent.prototype.archive_todo = function (todo) {
+        var _this = this;
+        console.log("Archive TODO PUT", todo);
+        todo.archived != todo.archived;
+        console.log("Archive TODO PUT2", todo);
         return this.http_service.update_todo(todo)
             .then(function () { return _this.get_todos(); });
     };

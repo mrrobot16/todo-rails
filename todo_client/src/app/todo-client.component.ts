@@ -31,12 +31,33 @@ export class TodoClientAppComponent implements OnInit {
   }
 
   update_todo(todo: Todo):Promise<any>{
-    console.dir({todo: todo});
+    console.log("TODO PUT", todo);
     return this.http_service.update_todo(todo)
     .then(
       ()=>this.get_todos()
     );
   }
+
+  complete_todo(todo: Todo):Promise<any>{
+    console.log("COMPLETE TODO PUT", todo);
+    todo.completed = !todo.completed;
+    console.log("COMPLETE TODO PUT2", todo)
+    return this.http_service.update_todo(todo)
+    .then(
+      ()=>this.get_todos()
+    );
+  }
+
+  archive_todo(todo: Todo):Promise<any>{
+    console.log("Archive TODO PUT", todo);
+    todo.archived != todo.archived;
+    console.log("Archive TODO PUT2", todo)
+    return this.http_service.update_todo(todo)
+    .then(
+      ()=>this.get_todos()
+    );
+  }
+
 
   addTodo(todo) {
     console.log("todo typeof: ", typeof todo);

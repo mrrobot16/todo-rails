@@ -15,23 +15,35 @@ export class TodoClientAppComponent implements OnInit {
   todos: Todo[];
   // fix in [Object Object] in the html, this way we can placeholder only
   todo = null;
+  show_archive = false;
+  toggle_display = "Show"
 
   constructor(private http_service: HttpService) {
+
   }
 
   ngOnInit() {
     this.get_todos();
   }
 
-  // Gets all todos
+  // Get all todos
   get_todos():Promise<any> {
-    return this.http_service.get_todos().then(
-      (todos) =>{
-        this.todos = todos.filter((todo) => todo.archived === false);
-      });
+    var get_call = this.http_service.get_todos();
+    if(this.show_archive == false){
+      return get_call.then(
+        (todos) => {
+          this.todos = todos.filter((todo) => todo.archived == false);
+        });;
+    }
+    else {
+      return get_call.then(
+        (todos) => {
+          this.todos = todos;
+        });
+    }
   }
 
-  // update our todo
+  // Update our todo
   update_todo(todo: Todo):Promise<any>{
     return this.http_service.update_todo(todo)
     .then(
@@ -39,18 +51,25 @@ export class TodoClientAppComponent implements OnInit {
     );
   }
 
-  // makes todo.completed equal to the oposite of his current value
+  // Makes todo.completed equal to the oposite of his current value
   complete_todo(todo: Todo):Promise<any>{
     todo.completed = !todo.completed;
     return this.http_service.update_todo(todo)
     .then(()=>this.get_todos());
   }
 
-  // makes todo.archived equal to the oposite of his current value
+  // Makes todo.archived equal to the oposite of his current value
   archive_todo(todo: Todo):Promise<any>{
     todo.archived = !todo.archived;
     return this.http_service.update_todo(todo)
     .then(()=>this.get_todos());
+  }
+
+  // Toggle Archived Todos
+  show_archived(){
+      this.show_archive = !this.show_archive;
+      this.toggle_display = this.show_archive ? "Hide" : "Show";
+      this.get_todos();
   }
 
   // Adds todo our rails server
@@ -62,7 +81,7 @@ export class TodoClientAppComponent implements OnInit {
     this.http_service.add_todo(new_todo).then(todo=>this.get_todos());
   }
 
-  // deletes todo from server
+  // Deletes todo from server
   delete_todo(todo):Promise<any>{
     return this.http_service.delete_todo(todo).then(()=> this.get_todos());
   }

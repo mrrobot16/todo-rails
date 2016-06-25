@@ -17,36 +17,53 @@ var TodoClientAppComponent = (function () {
         this.http_service = http_service;
         // fix in [Object Object] in the html, this way we can placeholder only
         this.todo = null;
+        this.show_archive = false;
+        this.toggle_display = "Show";
     }
     TodoClientAppComponent.prototype.ngOnInit = function () {
         this.get_todos();
     };
-    // Gets all todos
+    // Get all todos
     TodoClientAppComponent.prototype.get_todos = function () {
         var _this = this;
-        return this.http_service.get_todos().then(function (todos) {
-            _this.todos = todos.filter(function (todo) { return todo.archived === false; });
-        });
+        var get_call = this.http_service.get_todos();
+        if (this.show_archive == false) {
+            return get_call.then(function (todos) {
+                _this.todos = todos.filter(function (todo) { return todo.archived == false; });
+            });
+            ;
+        }
+        else {
+            return get_call.then(function (todos) {
+                _this.todos = todos;
+            });
+        }
     };
-    // update our todo
+    // Update our todo
     TodoClientAppComponent.prototype.update_todo = function (todo) {
         var _this = this;
         return this.http_service.update_todo(todo)
             .then(function () { return _this.get_todos(); });
     };
-    // makes todo.completed equal to the oposite of his current value
+    // Makes todo.completed equal to the oposite of his current value
     TodoClientAppComponent.prototype.complete_todo = function (todo) {
         var _this = this;
         todo.completed = !todo.completed;
         return this.http_service.update_todo(todo)
             .then(function () { return _this.get_todos(); });
     };
-    // makes todo.archived equal to the oposite of his current value
+    // Makes todo.archived equal to the oposite of his current value
     TodoClientAppComponent.prototype.archive_todo = function (todo) {
         var _this = this;
         todo.archived = !todo.archived;
         return this.http_service.update_todo(todo)
             .then(function () { return _this.get_todos(); });
+    };
+    // Toggle Archived Todos
+    TodoClientAppComponent.prototype.show_archived = function () {
+        this.show_archive = !this.show_archive;
+        this.toggle_display = this.show_archive ? "Hide" : "Show";
+        this.get_todos();
     };
     // Adds todo our rails server
     TodoClientAppComponent.prototype.addTodo = function (todo) {
@@ -57,7 +74,7 @@ var TodoClientAppComponent = (function () {
         new_todo.completed = false;
         this.http_service.add_todo(new_todo).then(function (todo) { return _this.get_todos(); });
     };
-    // deletes todo from server
+    // Deletes todo from server
     TodoClientAppComponent.prototype.delete_todo = function (todo) {
         var _this = this;
         return this.http_service.delete_todo(todo).then(function () { return _this.get_todos(); });

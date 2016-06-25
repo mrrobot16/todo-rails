@@ -24,7 +24,9 @@ var TodoClientAppComponent = (function () {
     // Gets all todos
     TodoClientAppComponent.prototype.get_todos = function () {
         var _this = this;
-        return this.http_service.get_todos().then(function (todos) { return _this.todos = todos; });
+        return this.http_service.get_todos().then(function (todos) {
+            _this.todos = todos.filter(function (todo) { return todo.archived === false; });
+        });
     };
     // update our todo
     TodoClientAppComponent.prototype.update_todo = function (todo) {

@@ -1,8 +1,6 @@
 <section class="todoapp">
 	<header class="header">
 		<h1>Todos</h1>
-
-
 	</header>
 <div class="container">
   <section class="main">
@@ -10,12 +8,12 @@
 		<input class="new-todo" placeholder="What needs to be done?" [ngModel]="todo" (keyup.enter)="addTodo(todo_description.value)" #todo_description>
     <ul class="todo-list">
 		<li *ngFor="let todo of todos">
-			<input [ngModel]="todo.description" (ngModelChange)="todo.description = $event" (keyup.enter)="update_todo(todo)">
+			<input class="todos" [ngModel]="todo.description" (ngModelChange)="todo.description = $event" (keyup.enter)="update_todo(todo)">
 				Complete
 				<input type="checkbox" class="com_box" (change)="complete_todo(todo)" [checked]="todo.completed">
 				Save
 				<input type="checkbox" class="arc_box" (change)="archive_todo(todo)" [checked]="todo.archived">
-			<button class="btton" (click)="delete_todo(todo)">Delete</button>
+			<a class="delete" (click)="delete_todo(todo)">Delete me</a>
 		</li>
 		</ul>
 	</section>

@@ -26,7 +26,9 @@ export class TodoClientAppComponent implements OnInit {
   // Gets all todos
   get_todos():Promise<any> {
     return this.http_service.get_todos().then(
-      (todos) =>this.todos = todos);
+      (todos) =>{
+        this.todos = todos.filter((todo) => todo.archived === false);
+      });
   }
 
   // update our todo

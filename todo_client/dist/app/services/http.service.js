@@ -13,54 +13,28 @@ var http_1 = require('@angular/http');
 var HttpService = (function () {
     function HttpService(http) {
         this.http = http;
-        console.log("Http Service on the move");
         this.all_todos = [];
         this.todo_end = "todos";
     }
+    // GET all Todo's
     HttpService.prototype.get_todos = function () {
         return this.http.get(this.todo_end)
             .toPromise()
             .then(function (res) { return res.json(); });
     };
+    // Post a Todo
     HttpService.prototype.add_todo = function (todo) {
-        console.log("add_todo service 1: ", todo);
         return this.post(todo);
     };
-    HttpService.prototype.get_todo = function (todo_id) {
-        console.log("get_todo from clicking <li>");
-        // return todo_id;
-    };
+    // PUT a Todo
     HttpService.prototype.update_todo = function (todo) {
         return this.put(todo);
     };
-    HttpService.prototype.delete = function (todo) {
+    // Delete a Todo
+    HttpService.prototype.delete_todo = function (todo) {
         return this.destroy(todo);
     };
-    HttpService.prototype.destroy = function (todo) {
-        var headers = new http_1.Headers({
-            'Content-Type': 'application/json'
-        });
-        return this.http
-            .delete(this.todo_end + '/' + todo.id, { headers: headers })
-            .toPromise().then(function (res) {
-            console.log('res from delete: ', res);
-        });
-    };
-    HttpService.prototype.put = function (todo) {
-        // Update existing TODO
-        var headers = new http_1.Headers({
-            'Content-Type': 'application/json'
-        });
-        // object sent to rails
-        var updated_todo = {
-            todo: todo
-        };
-        console.log({ put: todo, updated_todo: updated_todo, json: JSON.stringify(updated_todo) });
-        return this.http
-            .put(this.todo_end + '/' + todo.id, JSON.stringify(updated_todo), { headers: headers })
-            .toPromise()
-            .then(function (res) { return res.json(); });
-    };
+    // Called by add_todo();
     HttpService.prototype.post = function (todo) {
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
@@ -72,6 +46,30 @@ var HttpService = (function () {
             .post(this.todo_end, JSON.stringify(todoParams), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json(); });
+    };
+    // Called by update_todo();
+    HttpService.prototype.put = function (todo) {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        var updated_todo = {
+            todo: todo
+        };
+        return this.http
+            .put(this.todo_end + '/' + todo.id, JSON.stringify(updated_todo), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json(); });
+    };
+    // Called by delete_todo();
+    HttpService.prototype.destroy = function (todo) {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        return this.http
+            .delete(this.todo_end + '/' + todo.id, { headers: headers })
+            .toPromise().then(function (res) {
+            console.log('res from delete: ', res);
+        });
     };
     HttpService = __decorate([
         core_1.Injectable(), 

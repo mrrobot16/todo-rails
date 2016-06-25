@@ -1,23 +1,20 @@
 <section class="todoapp">
 	<header class="header">
 		<h1>Todos</h1>
-		<!-- NOTE todo_description Local variable so we can have a placeholder in the main input -->
+
 
 	</header>
 <div class="container">
   <section class="main">
-		<input class="new-todo" placeholder="What needs to be done?" (keyup.enter)="addTodo(todo_description.value)" #todo_description>
-    <!-- <button class="btn" (click)="get_todos()">Get Todos</button> -->
+				<!-- NOTE #todo_description Local variable in our new-todo inbox box so we can see a placeholder and not "[Object Object]" -->
+		<input class="new-todo" placeholder="What needs to be done?" [ngModel]="todo" (keyup.enter)="addTodo(todo_description.value)" #todo_description>
     <ul class="todo-list">
 		<li *ngFor="let todo of todos">
 			<input [ngModel]="todo.description" (ngModelChange)="todo.description = $event" (keyup.enter)="update_todo(todo)">
-
 				Complete
 				<input type="checkbox" class="com_box" (change)="complete_todo(todo)" [checked]="todo.completed">
 				Save
 				<input type="checkbox" class="arc_box" (change)="archive_todo(todo)" [checked]="todo.archived">
-
-			<!-- <button class="btn" (click)="archived_todo(todo)">Archive</button> -->
 			<button class="btton" (click)="delete_todo(todo)">Delete</button>
 		</li>
 		</ul>

@@ -9,65 +9,32 @@ export class HttpService{
   public todo_end: string;
 
   constructor(private http: Http){
-    console.log("Http Service on the move");
     this.all_todos = [];
     this.todo_end = "todos";
   }
 
+  // GET all Todo's
   get_todos():Promise<any>{
     return this.http.get(this.todo_end)
            .toPromise()
            .then(res => res.json());
   }
-
+  // Post a Todo
   add_todo(todo: Todo):Promise<Todo>{
-    console.log("add_todo service 1: ", todo);
     return this.post(todo);
   }
 
-  get_todo(todo_id): void{
-    console.log("get_todo from clicking <li>");
-    // return todo_id;
-  }
-
+  // PUT a Todo
   update_todo(todo){
     return this.put(todo);
   }
 
-  delete(todo){
+  // Delete a Todo
+  delete_todo(todo){
     return this.destroy(todo);
   }
 
-  private destroy(todo: Todo):Promise<void>{
-    let headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    return this.http
-    .delete(this.todo_end+'/'+todo.id, { headers: headers })
-    .toPromise().then((res)=>{
-      console.log('res from delete: ', res);
-    });
-  }
-
-  private put(todo: Todo):Promise<Todo>{
-
-  // Update existing TODO
-  let headers = new Headers({
-    'Content-Type': 'application/json'
-  });
-  // object sent to rails
-  var updated_todo = {
-    todo: todo
-  }
-
-  console.log({put: todo, updated_todo: updated_todo, json: JSON.stringify(updated_todo)})
-
-  return this.http
-    .put(this.todo_end+'/'+todo.id, JSON.stringify(updated_todo), { headers: headers })
-    .toPromise()
-    .then(res => res.json());
-  }
-
+  // Called by add_todo();
   private post(todo: Todo): Promise<Todo> {
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -81,8 +48,30 @@ export class HttpService{
       .then(res => res.json());
   }
 
+  // Called by update_todo();
+  private put(todo: Todo):Promise<Todo>{
+  let headers = new Headers({
+    'Content-Type': 'application/json'
+  });
+  var updated_todo = {
+    todo: todo
+  }
+  return this.http
+    .put(this.todo_end+'/'+todo.id, JSON.stringify(updated_todo), { headers: headers })
+    .toPromise()
+    .then(res => res.json());
+  }
 
-
-
+  // Called by delete_todo();
+  private destroy(todo: Todo):Promise<void>{
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    return this.http
+    .delete(this.todo_end+'/'+todo.id, { headers: headers })
+    .toPromise().then((res)=>{
+      console.log('res from delete: ', res);
+    });
+  }
 
 }

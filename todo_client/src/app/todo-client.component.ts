@@ -13,55 +13,46 @@ import {HTTP_PROVIDERS} from '@angular/http';
 
 export class TodoClientAppComponent implements OnInit {
   todos: Todo[];
-  todo = null; // fix in [Object Object] in the html
+  // fix in [Object Object] in the html, this way we can placeholder only
+  todo = null;
 
   constructor(private http_service: HttpService) {
-    console.log("plain todo: ", this.todo);
   }
 
   ngOnInit() {
     this.get_todos();
   }
 
-  // Note get my todos ---> TO CONTINUE YOU SAID CYBERSTRIKE WITNESS
+  // Gets all todos
   get_todos():Promise<any> {
-  return this.http_service.get_todos().then(
-    (todos) => this.todos = todos
-  );
+    return this.http_service.get_todos().then(
+      (todos) =>this.todos = todos);
   }
 
+  // update our todo
   update_todo(todo: Todo):Promise<any>{
-    console.log("TODO PUT", todo);
     return this.http_service.update_todo(todo)
     .then(
       ()=>this.get_todos()
     );
   }
 
+  // makes todo.completed equal to the oposite of his current value
   complete_todo(todo: Todo):Promise<any>{
-    console.log("COMPLETE TODO PUT", todo);
     todo.completed = !todo.completed;
-    console.log("COMPLETE TODO PUT2", todo)
     return this.http_service.update_todo(todo)
-    .then(
-      ()=>this.get_todos()
-    );
+    .then(()=>this.get_todos());
   }
 
+  // makes todo.archived equal to the oposite of his current value
   archive_todo(todo: Todo):Promise<any>{
-    console.log("Archive TODO PUT", todo);
     todo.archived = !todo.archived;
-    console.log("Archive TODO PUT2", todo)
     return this.http_service.update_todo(todo)
-    .then(
-      ()=>this.get_todos()
-    );
+    .then(()=>this.get_todos());
   }
 
-
+  // Adds todo our rails server
   addTodo(todo) {
-    console.log("todo typeof: ", typeof todo);
-    // console.log(todo);
     let new_todo = new Todo();
     new_todo.description = todo;
     new_todo.archived = false;
@@ -69,8 +60,9 @@ export class TodoClientAppComponent implements OnInit {
     this.http_service.add_todo(new_todo).then(todo=>this.get_todos());
   }
 
+  // deletes todo from server
   delete_todo(todo):Promise<any>{
-    return this.http_service.delete(todo).then(()=> this.get_todos());
+    return this.http_service.delete_todo(todo).then(()=> this.get_todos());
   }
 
 }

@@ -15,7 +15,7 @@ var http_1 = require('@angular/http');
 var TodoClientAppComponent = (function () {
     function TodoClientAppComponent(http_service) {
         this.http_service = http_service;
-        // fix in [Object Object] in the html, this way we can placeholder only
+        // fix in [Object Object] in the html, this way we can see placeholder only
         this.todo = null;
         this.show_archive = false;
         this.toggle_display = "Show";

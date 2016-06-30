@@ -71,7 +71,6 @@ var HttpService = (function () {
         return this.http
             .delete(this.todo_end + '/' + todo.id, { headers: headers })
             .toPromise().then(function (res) {
-            console.log('res from delete: ', res);
         });
     };
     HttpService = __decorate([

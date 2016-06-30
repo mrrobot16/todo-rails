@@ -74,7 +74,6 @@ export class HttpService{
     return this.http
     .delete(this.todo_end+'/'+todo.id, { headers: headers })
     .toPromise().then((res)=>{
-      console.log('res from delete: ', res);
     });
   }
 

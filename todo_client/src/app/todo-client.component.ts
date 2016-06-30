@@ -13,7 +13,7 @@ import {HTTP_PROVIDERS} from '@angular/http';
 
 export class TodoClientAppComponent implements OnInit {
   todos: Todo[];
-  // fix in [Object Object] in the html, this way we can placeholder only
+  // fix in [Object Object] in the html, this way we can see placeholder only
   todo = null;
   show_archive = false;
   toggle_display = "Show"
@@ -73,7 +73,7 @@ export class TodoClientAppComponent implements OnInit {
   }
 
   // Adds todo our rails server
-  addTodo(todo) {
+  addTodo(todo){
     let new_todo = new Todo();
     new_todo.description = todo;
     new_todo.archived = false;

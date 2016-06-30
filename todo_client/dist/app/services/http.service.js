@@ -18,9 +18,7 @@ var HttpService = (function () {
     }
     // GET all Todo's
     HttpService.prototype.get_todos = function () {
-        return this.http.get(this.todo_end)
-            .toPromise()
-            .then(function (res) { return res.json(); });
+        return this.get();
     };
     // Post a Todo
     HttpService.prototype.add_todo = function (todo) {
@@ -33,6 +31,11 @@ var HttpService = (function () {
     // Delete a Todo
     HttpService.prototype.delete_todo = function (todo) {
         return this.destroy(todo);
+    };
+    HttpService.prototype.get = function () {
+        return this.http.get(this.todo_end)
+            .toPromise()
+            .then(function (res) { return res.json(); });
     };
     // Called by add_todo();
     HttpService.prototype.post = function (todo) {

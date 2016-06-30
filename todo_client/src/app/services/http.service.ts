@@ -15,9 +15,7 @@ export class HttpService{
 
   // GET all Todo's
   get_todos():Promise<any>{
-    return this.http.get(this.todo_end)
-           .toPromise()
-           .then(res => res.json());
+    return this.get();
   }
   // Post a Todo
   add_todo(todo: Todo):Promise<Todo>{
@@ -32,6 +30,12 @@ export class HttpService{
   // Delete a Todo
   delete_todo(todo){
     return this.destroy(todo);
+  }
+
+  private get():Promise<Todo>{
+    return this.http.get(this.todo_end)
+           .toPromise()
+           .then(res => res.json());
   }
 
   // Called by add_todo();

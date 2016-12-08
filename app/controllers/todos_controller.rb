@@ -17,6 +17,8 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
     p "<************************>"
+    p "@todo.description"
+    p @todo.description
     p "todo_params:"
     p todo_params
     p "todo_params.class"

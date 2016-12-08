@@ -16,7 +16,12 @@ class TodosController < ApplicationController
   # POST /todos
   def create
     @todo = Todo.new(todo_params)
-
+    p "<************************>"
+    p "todo_params:"
+    p todo_params
+    p "todo_params.class"
+    p todo_params.class
+    p "<************************>"
     if @todo.save
       render json: @todo, status: :created, location: @todo
     else
